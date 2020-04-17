@@ -89,7 +89,7 @@ fn parse_date_list(n: Node) -> Option<Vec<Show>> {
         let details = item.last_child().unwrap().text();
         let show = Show {
             date: naive_date.to_string(),
-            artists: artists,
+            artists,
             venue: venue.trim().to_string(),
             details: details.trim().to_string(),
         };
@@ -122,7 +122,7 @@ fn parse(url: &str) -> Result<Vec<Show>, reqwest::Error> {
     }
 }
 
-fn main() -> std::io::Result<()> {
+fn scrape(output_file: &str) -> std::io::Result<()> {
     let mut all_shows: Vec<Show> = Vec::new();
 
     for url in &[
@@ -135,7 +135,22 @@ fn main() -> std::io::Result<()> {
         };
     }
 
-    let file = File::create("shows.json")?;
+    let file = File::create(output_file)?;
     serde_json::to_writer(file, &all_shows)?;
     Ok(())
+}
+
+fn main() -> std::io::Result<()> {
+    return scrape("shows.json");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn it_works() {
+        let file = "shows.json";
+        assert!(scrape(file).is_ok());
+        assert!(std::path::Path::new(file).exists());
+    }
 }
