@@ -1,22 +1,20 @@
+extern crate chrono;
 extern crate reqwest;
 extern crate select;
-extern crate chrono;
 extern crate serde;
 extern crate serde_json;
 
-use std::vec::Vec;
 use std::fmt;
 use std::fs::File;
-use std::io::prelude::*;
+use std::vec::Vec;
 
-use select::document::Document;
-use select::predicate::{Attr, Name, Predicate};
-use select::node::Node;
-use chrono::{DateTime, NaiveDate, Datelike};
 use chrono::Local;
+use chrono::{DateTime, Datelike, NaiveDate};
+use select::document::Document;
+use select::node::Node;
+use select::predicate::{Attr, Name, Predicate};
 
 use serde::Serialize;
-use serde_json::Result;
 
 #[derive(Serialize)]
 struct Show {
@@ -31,7 +29,11 @@ struct Show {
 impl fmt::Display for Show {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let artists = self.artists.join(", ");
-        write!(f, "date: {}\nvenue {}\nartists: {}\ndetails: {}", self.date, self.venue, artists, self.details)
+        write!(
+            f,
+            "date: {}\nvenue {}\nartists: {}\ndetails: {}",
+            self.date, self.venue, artists, self.details
+        )
     }
 }
 
@@ -42,7 +44,7 @@ fn parse_date_string(date: String) -> NaiveDate {
     let year = today.format("%Y");
     let date_with_year = &format!("{} {}", year, date);
     let date = NaiveDate::parse_from_str(date_with_year, "%Y %b_%d").unwrap();
-    return date
+    return date;
 }
 
 fn parse_date_node(n: Node) -> NaiveDate {
@@ -57,13 +59,14 @@ fn parse_date_node(n: Node) -> NaiveDate {
         date = NaiveDate::from_ymd(date.year() + 1, date.month(), date.day())
     }
 
-    return date
+    return date;
 }
 
 fn parse_date_list(n: Node) -> Option<Vec<Show>> {
     let mut shows: Vec<Show> = Vec::new();
 
-    let date_node_collection = n.find(Name("a").and(Attr("name", ())))
+    let date_node_collection = n
+        .find(Name("a").and(Attr("name", ())))
         .take(1)
         .collect::<Vec<_>>();
 
@@ -77,14 +80,14 @@ fn parse_date_list(n: Node) -> Option<Vec<Show>> {
     let li_nodes = n.find(Name("ul").descendant(Name("li")));
 
     for item in li_nodes {
-        let anchors = item.find(Name("a")).collect::<Vec<_>>() ;
+        let anchors = item.find(Name("a")).collect::<Vec<_>>();
         let venue = anchors[0].text();
         let mut artists: Vec<String> = Vec::new();
         for i in &anchors[1..] {
             artists.push(i.text().trim().to_string())
         }
         let details = item.last_child().unwrap().text();
-        let show = Show{
+        let show = Show {
             date: naive_date.to_string(),
             artists: artists,
             venue: venue.trim().to_string(),
@@ -92,33 +95,40 @@ fn parse_date_list(n: Node) -> Option<Vec<Show>> {
         };
         shows.push(show)
     }
-    return Some(shows)
+    return Some(shows);
 }
 
-fn parse(url: &str) -> Result<Vec<Show>> {
-    let resp = reqwest::get(url).unwrap();
-    assert!(resp.status().is_success());
+fn parse(url: &str) -> Result<Vec<Show>, reqwest::Error> {
+    let resp = reqwest::blocking::get(url);
+    match resp {
+        Ok(resp) => {
+            let document = Document::from_read(resp).unwrap();
+            let root_list = document.find(Name("ul")).take(1).collect::<Vec<_>>()[0];
 
-    let document = Document::from_read(resp).unwrap();
-    let root_list = document.find(Name("ul")).take(1).collect::<Vec<_>>()[0];
+            let mut show_vec: Vec<Show> = Vec::new();
+            for node in root_list.children() {
+                match parse_date_list(node) {
+                    Some(v) => show_vec.extend(v),
+                    _ => (),
+                }
+            }
 
-    let mut show_vec: Vec<Show> = Vec::new();
-    for node in root_list.children() {
-        match parse_date_list(node) {
-            Some(v) => show_vec.extend(v),
-            _ => (),
+            return Ok(show_vec);
+        }
+        Err(resp) => {
+            println!("Could not parse url.");
+            return Err(resp);
         }
     }
-
-    return Ok(show_vec)
-
 }
-
 
 fn main() -> std::io::Result<()> {
     let mut all_shows: Vec<Show> = Vec::new();
 
-    for url in &["http://www.foopee.com/punk/the-list/by-date.0.html", "http://www.foopee.com/punk/the-list/by-date.1.html"] {
+    for url in &[
+        "http://www.foopee.com/punk/the-list/by-date.0.html",
+        "http://www.foopee.com/punk/the-list/by-date.1.html",
+    ] {
         match parse(url) {
             Ok(s) => all_shows.extend(s),
             Err(e) => println!("Failed parsing url: {} \n{}", url, e),
