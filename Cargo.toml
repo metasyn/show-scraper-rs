@@ -1,11 +1,11 @@
 [package]
 name = "show-scraper"
 version = "0.1.0"
-authors = ["Alexander Johnson <alexx.johnson@sgmail.com>"]
+authors = ["Xander Johnson <xander@metasyn.pw>"]
 edition = "2018"
 
 [dependencies]
-rocket = "0.4.4"
+rocket = "0.4.7"
 reqwest = { version = "0.10", features = ["blocking", "json"] }
 scraper = "0.11"
 select = "0.4"
