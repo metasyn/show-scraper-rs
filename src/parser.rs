@@ -1,10 +1,3 @@
-extern crate chrono;
-extern crate reqwest;
-extern crate select;
-extern crate serde;
-extern crate serde_json;
-
-use std::fmt;
 use std::vec::Vec;
 
 use chrono::Local;
@@ -13,28 +6,7 @@ use select::document::Document;
 use select::node::Node;
 use select::predicate::{Attr, Name, Predicate};
 
-use serde::Serialize;
-
-#[derive(Serialize)]
-struct Show {
-    venue: String,
-    artists: Vec<String>,
-    // latitude: f32,
-    // longitude: f32,
-    date: String,
-    details: String,
-}
-
-impl fmt::Display for Show {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let artists = self.artists.join(", ");
-        write!(
-            f,
-            "date: {}\nvenue {}\nartists: {}\ndetails: {}",
-            self.date, self.venue, artists, self.details
-        )
-    }
-}
+use crate::common::Show;
 
 fn parse_date_string(date: String) -> NaiveDate {
     // Take a datestring like mar_10 and return a NaiveDate we can use.
@@ -55,9 +27,9 @@ fn parse_date_node(n: Node) -> NaiveDate {
 
     // If the date is in January but today is in December
     if date.month() < today.month() {
-        date = NaiveDate::from_ymd(date.year() + 1, date.month(), date.day())
+        date = NaiveDate::from_ymd_opt(date.year() + 1, date.month(), date.day())
+            .expect("unable to set date while handling new year transition")
     }
-
     return date;
 }
 
@@ -91,6 +63,10 @@ fn parse_date_list(n: Node) -> Option<Vec<Show>> {
             artists,
             venue: venue.trim().to_string(),
             details: details.trim().to_string(),
+            time: None,
+            organizers: None,
+            link: None,
+            tags: None,
         };
         shows.push(show)
     }
