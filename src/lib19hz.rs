@@ -1,3 +1,4 @@
+use chrono::{Datelike, Local, NaiveDate};
 use select::document::Document;
 use select::predicate::Name;
 
@@ -39,26 +40,58 @@ fn parse_19hz_info(url: &str) -> Result<Vec<Show>, reqwest::Error> {
                     let date_time = row.get("Date/Time").unwrap_or("<missing-date>").to_string();
                     let date_time_split = date_time.split("<br>").collect::<Vec<_>>();
 
+                    let now = Local::now();
+
+                    // TODO: handle Dec -> January where we'll need to increment the year
+                    let mut year = now.format("%Y").to_string();
+
                     let (date, time) = match date_time_split.len() {
-                        0 | 1 => (date_time.clone(), None),
-                        2 => (
-                            date_time_split[0].to_string(),
-                            Some(date_time_split[1].to_string()),
-                        ),
-                        _ => todo!(),
+                        2 => {
+                            // 19hz doesn't include year, so we jsut attach ours here.
+                            year.push_str(date_time_split[0]);
+
+                            // Parse it
+                            let parsed =
+                                NaiveDate::parse_from_str(year.as_str().trim(), "%Y%a: %b %e");
+
+                            // If its ok, update the output. The match syntax was tricky here
+                            // so we're just checking the single condition.
+                            if parsed.is_err() {
+                                return None;
+                            }
+                            let value = parsed.unwrap();
+                            let delta = value
+                                - NaiveDate::from_ymd_opt(now.year(), now.month(), now.day())
+                                    .unwrap();
+                            if delta.num_days() > 14 {
+                                return None;
+                            }
+
+                            let output = value.format("%Y-%m-%d").to_string();
+
+                            // Final return for the matched arm
+                            (output, Some(date_time_split[1].to_string()))
+                        }
+                        // TODO
+                        // Could handle this better maybe?
+                        _ => (date_time.clone(), None),
                     };
 
-                    return Show {
+                    let details = row.get("Price | Age").unwrap_or("").to_string();
+
+                    return Some(Show {
                         venue: venue.expect("could not parse venue"),
                         artists: vec![title],
                         date,
-                        details: row.get("Price | Age").unwrap_or("").to_string(),
+                        details,
                         time,
                         organizers: row.get("Organizers").map(|x| x.to_string()),
                         link, //row.get("Links").map(|x| x.to_string()),
                         tags: row.get("Tags").map(|x| x.to_string()),
-                    };
+                    });
                 })
+                .filter(|x| x.is_some())
+                .map(|x| x.unwrap())
                 .collect::<Vec<Show>>();
 
             return Ok(shows);
@@ -85,4 +118,14 @@ fn scrape_shows() -> Vec<Show> {
 
 pub fn scrape_shows_to_json() -> serde_json::Result<std::string::String> {
     return serde_json::to_string(&scrape_shows());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_parsing_19hz_date_fmt() {
+        let res = NaiveDate::parse_from_str("2023 Sun: Feb 5", "%Y %a: %b%e");
+        assert!(res.is_ok());
+    }
 }
