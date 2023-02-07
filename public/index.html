@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Display a map</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width"
+    />
+
+    <link
+      href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <link href="out.css" type="text/css" rel="stylesheet" />
+    <script type="module" src="out.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <div id="map-overlay">
+      <button id="filter-button" class="positive-button">filter shows</button>
+      <div id="filter">
+        <div id="filter-top">
+          <button id="hide-filter-button" class="hidden negative-button">
+            hide filters
+          </button>
+          <button id="reset-filter-button" class="hidden neutral-button">
+            reset
+          </button>
+        </div>
+
+        <div id="filters" class="hidden">
+          <button id="today-button" class="positive-button">today</button>
+          <button id="tomorrow-button" class="positive-button">tomorrow</button>
+          <button id="by-date-button" class="positive-button">by date</button>
+        </div>
+        <div id="date-selectors" class="hidden"></div>
+      </div>
+      <div id="listing"></div>
+    </div>
+    <div id="mobile-nav">
+      <button id="show-list-button" class="positive-button">List</button>
+      <button id="show-map-button" class="positive-button">Map</button>
+    </div>
+    <!-- debugging things -->
+    <div id="geocoder"></div>
+  </body>
+</html>

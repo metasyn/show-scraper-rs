@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Use the geocoder without a map</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+
+    <style>
+      #geocoder {
+        z-index: 1;
+        margin: 20px;
+      }
+
+      .mapboxgl-ctrl-geocoder {
+        min-width: 100%;
+      }
+    </style>
+
+    <div id="geocoder"></div>
+    <pre id="result"></pre>
+
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoibWV0YXN5biIsImEiOiIwN2FmMDNhNTRhOWQ3NDExODI1MTllMDk1ODc3NTllZiJ9.Bye80QJ4r0RJsKj4Sre6KQ";
+      const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        types: "poi",
+        proximity: {
+          longitude: -122.416,
+          latitude: 37.76,
+        },
+        countries: "us", // ISO 3166
+        bbox: [-125.222168, 35.728677, -118.048096, 41.845013],
+        filter: (f) => {
+          return true;
+          return [
+            "music",
+            "event",
+            "venue",
+            "concert",
+            "band",
+            "show",
+            "stage",
+            "hall",
+            "club",
+            "disco",
+            "punk",
+            "jazz",
+            "rock",
+            "theater",
+            "theatre",
+            "gallery",
+            "art",
+            "bar", // sometimes the only categories for venues are related to serving drinks
+            "alcohol",
+            "auditorium",
+            "amphitheater",
+          ].some((cat) => f.properties.category.toLowerCase().includes(cat));
+        },
+      });
+
+      geocoder.addTo("#geocoder");
+
+      // Get the geocoder results container.
+      const results = document.getElementById("result");
+
+      // Add geocoder result to container.
+      geocoder.on("result", (e) => {
+        results.innerText = JSON.stringify(e.result, null, 2);
+      });
+
+      // Clear results container when search is cleared.
+      geocoder.on("clear", () => {
+        results.innerText = "";
+      });
+    </script>
+  </body>
+</html>

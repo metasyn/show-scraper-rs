@@ -1,0 +1,309 @@
+/* General */
+
+:root {
+  --blueish: #72c4d0;
+  --seafoam: #a5d6c3;
+  --grey: #f2f2f2;
+
+  --mobile-nav-height: 60px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  display: block;
+  border: none;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 3px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+ul,
+li {
+  padding-left: 10px;
+}
+
+li {
+  list-style-type: none;
+}
+
+/* ID*/
+
+#map {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  width: 75%;
+  left: 25%;
+}
+
+#listing .listing-item:nth-child(odd) {
+  background-color: var(--grey);
+}
+
+#listing p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 5px;
+}
+
+#listing .date {
+  z-index: 2;
+  float: right;
+}
+
+#listing {
+  padding: 5px;
+  overflow: auto;
+}
+
+#map-overlay {
+  position: absolute;
+  width: 25%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  background-color: #fff;
+  max-height: 100%;
+  height: 100%;
+  overflow: auto;
+  font-size: 14px;
+}
+
+#filter-top {
+  display: flex;
+}
+
+#filters {
+  display: flex;
+}
+
+#filter button {
+  width: 100%;
+}
+
+#filter-button {
+  width: calc(100% - 2 * 10px);
+}
+
+#date-selectors {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+}
+
+#dates-selectors p {
+  margin: 0px;
+}
+#date-selectors label {
+  font-size: 16px;
+  border-radius: 2px;
+  padding: 10px;
+  outline-width: 1px;
+  outline-style: outset;
+  background-color: var(--grey);
+}
+
+#date-selectors input {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+#mobile-nav {
+  display: none;
+  width: 100%;
+  z-index: 2;
+  background-color: var(--grey);
+}
+
+/* Class */
+
+.neutral-button {
+  color: #111;
+  background-color: var(--seafoam);
+}
+
+.positive-button {
+  color: #111;
+  background-color: var(--blueish);
+}
+
+.negative-button {
+  color: #eee;
+  background-color: black;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.maplibregl-popup {
+  min-width: 400px;
+  max-width: 600px;
+  max-height: 400px;
+}
+
+.maplibregl-popup .popup-listing {
+  margin-top: 10px;
+  overflow-y: auto;
+
+  max-height: 400px;
+}
+
+.maplibregl-popup-content .listing-item > * {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.maplibregl-popup-content .date {
+  font-weight: bold;
+}
+
+.maplibregl-popup-content .venue {
+  position: absolute;
+  font-size: 18px;
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: var(--seafoam);
+  width: 100%;
+}
+
+.listing-item {
+  background-color: #fff;
+  border-radius: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 18px;
+}
+
+.listing-item ul {
+  margin: 2px;
+}
+
+.listing-item li {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#listing .listing-item:hover {
+  filter: invert(100%);
+}
+
+.listing-item .date {
+  margin-right: 10px;
+}
+
+/* Dev */
+#geocoder {
+  z-index: 1;
+  position: relative;
+  float: left;
+  left: 25%;
+}
+
+#result {
+  z-index: 2;
+  position: absolute;
+  right: 0px;
+  width: 30%;
+  background: #ddd;
+  height: 50%;
+  top: 100px;
+  opacity: 0.5;
+  overflow-y: auto;
+}
+
+#result:hover {
+  opacity: 1;
+}
+
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+
+/* scroll bars */
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 14px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 3px solid var(--dark);
+}
+
+@media only screen and (max-device-width: 580px) {
+  #map {
+    width: 100%;
+    left: 0px;
+  }
+
+  #map-overlay {
+    position: absolute;
+    display: block;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  #date-selector-container {
+    grid-template-columns: unset;
+  }
+
+  .map-overlay .closebtn {
+    position: absolute;
+    display: block;
+    left: 0px;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    font-size: 64px;
+  }
+
+  #mobile-nav {
+    display: block;
+    left: 0px;
+    bottom: 0px;
+    height: var(--mobile-nav-height);
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    background: rgba(0, 0, 0, 0);
+  }
+
+  #mobile-nav button {
+    opacity: 1;
+    width: 100%;
+    height: 40px;
+  }
+
+  #listing {
+    margin-bottom: var(--mobile-nav-height);
+  }
+}

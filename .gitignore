@@ -2,3 +2,4 @@
 **/*.rs.bk
 shows.json
 bundle
+node_modules

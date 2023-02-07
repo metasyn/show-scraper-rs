@@ -1,0 +1,856 @@
+{
+  "venues": {
+    "924 Gilman Street": {
+      "coordinates": [
+        -122.299327,
+        37.879571
+      ],
+      "text": "The 924 Gilman Street Project"
+    },
+    "August Hall, S.F.": {
+      "coordinates": [
+        -122.409894,
+        37.787443
+      ],
+      "text": "August Hall"
+    },
+    "Bottom of the Hill, S.F.": {
+      "coordinates": [
+        -122.396109,
+        37.765108
+      ],
+      "text": "Bottom of the Hill"
+    },
+    "Catalyst Atrium, Santa Cruz": {
+      "coordinates": [
+        -122.025597,
+        36.971359
+      ],
+      "text": "The Catalyst"
+    },
+    "Fox Theater, Oakland": {
+      "coordinates": [
+        -122.27067,
+        37.808136
+      ],
+      "text": "Fox Theater"
+    },
+    "Golden Bull, Oakland": {
+      "coordinates": [
+        -122.270409,
+        37.803999
+      ],
+      "text": "Golden Bull"
+    },
+    "Longboard Margarita Bar, Pacifica": {
+      "coordinates": [
+        -122.488115,
+        37.633134
+      ],
+      "text": "Longboard Margarita Bar"
+    },
+    "Monarch (San Francisco)": {
+      "coordinates": [
+        -122.408555,
+        37.781002
+      ],
+      "text": "Monarch"
+    },
+    "Blue Lagoon, Santa Cruz": {
+      "coordinates": [
+        -122.025316,
+        36.970636
+      ],
+      "text": "The Blue Lagoon"
+    },
+    "The Blue Lagoon, Santa Cruz": {
+      "coordinates": [
+        -122.025316,
+        36.970636
+      ],
+      "text": "The Blue Lagoon"
+    },
+    "Tamarack, 1501 Harrison Street, Oakland": {
+      "coordinates": [
+        -122.267566,
+        37.804392
+      ],
+      "text": "Tamarack"
+    },
+    "The Endup (San Francisco)": {
+      "coordinates": [
+        -122.403872,
+        37.777338
+      ],
+      "text": "The EndUp"
+    },
+    "Monroe SF (San Francisco)": {
+      "coordinates": [
+        -122.405067,
+        37.79808
+      ],
+      "text": "Monroe"
+    },
+    "Mars Bar (San Francisco)": {
+      "coordinates": [
+        -122.4032609,
+        37.7732839
+      ]
+    },
+    "F8 (San Francisco)": {
+      "coordinates": [
+        -122.409973,
+        37.77526
+      ],
+      "text": "F8   1192 Folsom"
+    },
+    "F8 1192 Folsom (San Francisco)": {
+      "coordinates": [
+        -122.409973,
+        37.77526
+      ],
+      "text": "F8   1192 Folsom"
+    },
+    "Rio Theater, Santa Cruz": {
+      "coordinates": [
+        -122.010467,
+        36.9799735
+      ],
+      "text": "Rio Theatre"
+    },
+    "Zanzi (Oakland)": {
+      "coordinates": [
+        -122.2663121,
+        37.8112817
+      ]
+    },
+    "The Valencia Room (San Francisco)": {
+      "coordinates": [
+        -122.421559,
+        37.762505
+      ],
+      "text": "The Valencia Room"
+    },
+    "DNA Lounge (San Francisco)": {
+      "coordinates": [
+        -122.4126915,
+        37.770982000000004
+      ],
+      "text": "DNA Lounge"
+    },
+    "Ashkenaz, Berkeley": {
+      "coordinates": [
+        -122.2957155,
+        37.8801265
+      ],
+      "text": "Ashkenaz"
+    },
+    "Catalyst, Santa Cruz": {
+      "coordinates": [
+        -122.025597,
+        36.971359
+      ],
+      "text": "The Catalyst"
+    },
+    "Knockout, S.F.": {
+      "coordinates": [
+        -122.420015,
+        37.745174
+      ],
+      "text": "The Knockout"
+    },
+    "Regency Ballroom, S.F.": {
+      "coordinates": [
+        -122.421384,
+        37.787763
+      ],
+      "text": "The Regency Ballroom"
+    },
+    "New Parish, Oakland": {
+      "coordinates": [
+        -122.272751,
+        37.807796
+      ],
+      "text": "The New Parish"
+    },
+    "The Continental Bar Lounge &amp; Patio (San Jose)": {
+      "coordinates": [
+        -121.886756,
+        37.330589
+      ],
+      "text": "The Continental Bar & Lounge"
+    },
+    "Crepe Place, Santa Cruz": {
+      "coordinates": [
+        -122.010887,
+        36.979573
+      ]
+    },
+    "Empress Theater, Vallejo": {
+      "coordinates": [
+        -122.257631,
+        38.1022315
+      ],
+      "text": "Empress Theatre"
+    },
+    "Make-Out Room (San Francisco)": {
+      "coordinates": [
+        -122.419419,
+        37.75537
+      ],
+      "text": "Make-Out Room"
+    },
+    "924 Gilman Street, Berkeley": {
+      "coordinates": [
+        -122.299317,
+        37.8795805
+      ],
+      "text": "924 Gilman Street"
+    },
+    "Almost Famous Wine Lounge, Livermore": {
+      "coordinates": [
+        -121.769592,
+        37.683284
+      ],
+      "text": "Swirl on the Square"
+    },
+    "Great American Music Hall, S.F.": {
+      "coordinates": [
+        -122.418953,
+        37.78498999999999
+      ],
+      "text": "Great American Music Hall"
+    },
+    "Hopmonk Tavern, Novato": {
+      "coordinates": [
+        -122.822841,
+        38.401164
+      ],
+      "text": "HopMonk Tavern"
+    },
+    "Fillmore, S.F.": {
+      "coordinates": [
+        -122.4330825,
+        37.784025
+      ],
+      "text": "The Fillmore Auditorium"
+    },
+    "Radio Habana Social Club, S.F.": {
+      "coordinates": [
+        -122.420913,
+        37.755237
+      ]
+    },
+    "Ritz, San Jose": {
+      "coordinates": [
+        -121.88583,
+        37.32997
+      ],
+      "text": "The Ritz"
+    },
+    "August Hall (San Francisco)": {
+      "coordinates": [
+        -122.409894,
+        37.787443
+      ],
+      "text": "August Hall"
+    },
+    "Stork Club, Oakland": {
+      "coordinates": [
+        -122.2683657,
+        37.8131757
+      ]
+    },
+    "Pop's Bar (San Francisco)": {
+      "coordinates": [
+        -122.408297,
+        37.753024
+      ],
+      "text": "Pop's Bar"
+    },
+    "Chapel, S.F.": {
+      "coordinates": [
+        -122.42138,
+        37.76052
+      ],
+      "text": "The Chapel"
+    },
+    "DNA Lounge Above, S.F.": {
+      "coordinates": [
+        -122.4126915,
+        37.770982000000004
+      ],
+      "text": "DNA Lounge"
+    },
+    "Guild Theater, Menlo Park": {
+      "coordinates": [
+        -122.181271,
+        37.452414
+      ],
+      "text": "Guild Theatre"
+    },
+    "Cornerstone, Berkeley": {
+      "coordinates": [
+        -122.267336,
+        37.866325
+      ],
+      "text": "Cornerstone"
+    },
+    "DNA Lounge, S.F.": {
+      "coordinates": [
+        -122.4126915,
+        37.770982000000004
+      ],
+      "text": "DNA Lounge"
+    },
+    "Rickshaw Stop, S.F.": {
+      "coordinates": [
+        -122.420431,
+        37.776105
+      ],
+      "text": "Rickshaw Stop"
+    },
+    "Independent, S.F.": {
+      "coordinates": [
+        -122.437835,
+        37.775573
+      ],
+      "text": "The Independent"
+    },
+    "Uptown Theater, Napa": {
+      "coordinates": [
+        -122.287376,
+        38.29635
+      ],
+      "text": "Uptown Theatre"
+    },
+    "Phoenix Theater, Petaluma": {
+      "coordinates": [
+        -122.64300349999999,
+        38.234977
+      ],
+      "text": "Phoenix Theater"
+    },
+    "The Continental Bar (San Jose)": {
+      "coordinates": [
+        -121.886756,
+        37.330589
+      ],
+      "text": "The Continental Bar & Lounge"
+    },
+    "Plough": {
+      "coordinates": [
+        -122.460546,
+        37.783194
+      ],
+      "text": "Plough & Stars"
+    },
+    "Caravan Lounge, San Jose": {
+      "coordinates": [
+        -121.892253,
+        37.332907
+      ],
+      "text": "The Caravan Lounge"
+    },
+    "The Foundry (San Francisco)": {
+      "coordinates": [
+        -122.4130137,
+        37.7723519
+      ]
+    },
+    "The Midway (San Francisco)": {
+      "coordinates": [
+        -122.3856944,
+        37.7492774
+      ]
+    },
+    "Envelop at The Midway (San Francisco)": {
+      "coordinates": [
+        -122.3856944,
+        37.7492774
+      ]
+    },
+    "The Midway Patio (San Francisco)": {
+      "coordinates": [
+        -122.3856944,
+        37.7492774
+      ]
+    },
+    "Crybaby, Oakland": {
+      "coordinates": [
+        -122.2694797,
+        37.8085784
+      ]
+    },
+    "Hawthorn (San Francisco)": {
+      "coordinates": [
+        -122.404167,
+        37.787846
+      ],
+      "text": "Hawthorn"
+    },
+    "Great Northern, S.F": {
+      "coordinates": [
+        -122.406406,
+        37.767478
+      ],
+      "text": "The Great Northern"
+    },
+    "Peacock Lounge, 552 Haight Street, S.F.": {
+      "coordinates": [
+        -122.431239,
+        37.772039
+      ],
+      "text": "Peacock Lounge"
+    },
+    "Halcyon (San Francisco)": {
+      "coordinates": [
+        -122.413905,
+        37.771575
+      ],
+      "text": "Halcyon"
+    },
+    "El Rio (San Francisco)": {
+      "coordinates": [
+        -122.419465,
+        37.746845
+      ],
+      "text": "El Rio"
+    },
+    "Parliament Event Venue (Oakland)": {
+      "coordinates": [
+        -122.2750478,
+        37.8010164
+      ],
+      "text": "The Armory"
+    },
+    "Lowbrau (Sacramento)": {
+      "coordinates": [
+        -121.48042,
+        38.575804
+      ],
+      "text": "LowBrau"
+    },
+    "Mothership Bar (San Francisco)": {
+      "coordinates": [
+        -122.419351,
+        37.7469249
+      ]
+    },
+    "Luxx Event Space (San Francisco)": {
+      "coordinates": [
+        -122.409551,
+        37.7813734
+      ]
+    },
+    "The Great Northern (San Francisco)": {
+      "coordinates": [
+        -122.406406,
+        37.767478
+      ],
+      "text": "The Great Northern"
+    },
+    "1015 Folsom (San Francisco)": {
+      "coordinates": [
+        -122.405774,
+        37.778204
+      ],
+      "text": "1015 Folsom"
+    },
+    "Pure Nightclub (Sunnyvale)": {
+      "coordinates": [
+        -122.0298038,
+        37.3768037
+      ]
+    },
+    "Yolo Nightclub (San Francisco)": {
+      "coordinates": [
+        -122.4133157,
+        37.7715426
+      ]
+    },
+    "Public Works (San Francisco)": {
+      "coordinates": [
+        -122.419391,
+        37.768948
+      ],
+      "text": "Public Works"
+    },
+    "Public Works Loft (San Francisco)": {
+      "coordinates": [
+        -122.419391,
+        37.768948
+      ],
+      "text": "Public Works"
+    },
+    "Temple Nightclub (San Francisco)": {
+      "coordinates": [
+        -122.397227,
+        37.787898
+      ],
+      "text": "Temple Nightclub"
+    },
+    "Temple (San Francisco)": {
+      "coordinates": [
+        -122.397227,
+        37.787898
+      ],
+      "text": "Temple Nightclub"
+    },
+    "Elbo Room, Oakland": {
+      "coordinates": [
+        -119.770712,
+        39.535467
+      ],
+      "text": "Elbow Room"
+    },
+    "The Record Bar (San Francisco)": {
+      "coordinates": [
+        -122.4100788,
+        37.7841668
+      ]
+    },
+    "Pure Night Club (Sunnyvale)": {
+      "coordinates": [
+        -122.419391,
+        37.768948
+      ],
+      "text": "Toyota's Waiting Room"
+    },
+    "Henry Miller Library, Big Sur": {
+      "coordinates": [
+        -121.753744,
+        36.220643
+      ],
+      "text": "Henry Miller Memorial Library"
+    },
+    "The Regency Ballroom (San Francisco)": {
+      "coordinates": [
+        -122.421384,
+        37.787763
+      ],
+      "text": "The Regency Ballroom"
+    },
+    "Ivy Room, Albany": {
+      "coordinates": [
+        -122.299128,
+        37.890431
+      ],
+      "text": "Ivy Room"
+    },
+    "Club Six (San Francisco)": {
+      "coordinates": [
+        -122.4096056,
+        37.7813345
+      ]
+    },
+    "Fulton 55 (Fresno)": {
+      "coordinates": [
+        -119.800556,
+        36.74374
+      ],
+      "text": "Fulton 55"
+    },
+    "Thee Parkside, S.F.": {
+      "coordinates": [
+        -122.399842,
+        37.765067
+      ],
+      "text": "Thee Parkside"
+    },
+    "Thrillhouse Records, S.F.": {
+      "coordinates": [
+        -122.422312,
+        37.742173
+      ],
+      "text": "Thrillhouse Records"
+    },
+    "Harlow's, Sacramento": {
+      "coordinates": [
+        -121.469989,
+        38.573963
+      ],
+      "text": "Harlow's"
+    },
+    "The Warfield (San Francisco)": {
+      "coordinates": [
+        -122.410151,
+        37.782675499999996
+      ],
+      "text": "The Warfield"
+    },
+    "Warfield, S.F.": {
+      "coordinates": [
+        -122.410151,
+        37.782675499999996
+      ],
+      "text": "The Warfield"
+    },
+    "Cat Club (San Francisco)": {
+      "coordinates": [
+        -122.409901,
+        37.775324
+      ],
+      "text": "Cat Club"
+    },
+    "Elbo Room Jack London (Oakland)": {
+      "coordinates": [
+        -122.275896,
+        37.796961
+      ],
+      "text": "Elbo Room Jack London"
+    },
+    "Rickshaw Stop (San Francisco)": {
+      "coordinates": [
+        -122.420431,
+        37.776105
+      ],
+      "text": "Rickshaw Stop"
+    },
+    "Audio Nightclub (San Francisco)": {
+      "coordinates": [
+        -122.413832,
+        37.771378
+      ],
+      "text": "Audio Nightclub"
+    },
+    "Audio (San Francisco)": {
+      "coordinates": [
+        -122.413832,
+        37.771378
+      ],
+      "text": "Audio Nightclub"
+    },
+    "Bottom Of The Hill (San Francisco)": {
+      "coordinates": [
+        -122.396109,
+        37.765108
+      ],
+      "text": "Bottom of the Hill"
+    },
+    "BRIX 581 (Oakland)": {
+      "coordinates": [
+        -122.27835,
+        37.79926
+      ],
+      "text": "BRIX 581"
+    },
+    "Origin (San Francisco)": {
+      "coordinates": [
+        -122.432804,
+        37.783863
+      ],
+      "text": "Origin"
+    },
+    "The Independent (San Francisco)": {
+      "coordinates": [
+        -122.437835,
+        37.775573
+      ],
+      "text": "The Independent"
+    },
+    "Bimbo's 365 Club, S.F.": {
+      "coordinates": [
+        -122.41565750000001,
+        37.803768500000004
+      ],
+      "text": "Bimbo's 365 Club"
+    },
+    "Regency Ballroom (San Francisco)": {
+      "coordinates": [
+        -122.421384,
+        37.787763
+      ],
+      "text": "The Regency Ballroom"
+    },
+    "Bill Graham Civic Auditorium (San Francisco)": {
+      "coordinates": [
+        -122.4171575,
+        37.778162
+      ],
+      "text": "Bill Graham Civic Auditorium"
+    },
+    "Faces Nightclub (Sacramento)": {
+      "coordinates": [
+        -121.4802576,
+        38.5752187
+      ]
+    },
+    "Greek Theatre (Berkeley)": {
+      "coordinates": [
+        -122.2542195,
+        37.873721
+      ],
+      "text": "Hearst Greek Theatre"
+    },
+    "The Uc Theatre (Berkeley)": {
+      "coordinates": [
+        -122.269954,
+        37.871631
+      ],
+      "text": "UC Theatre"
+    },
+    "Record Bar (San Francisco)": {
+      "coordinates": [
+        -122.4100788,
+        37.7841668
+      ]
+    },
+    "The Fillmore (San Francisco)": {
+      "coordinates": [
+        -122.4330825,
+        37.784025
+      ],
+      "text": "The Fillmore Auditorium"
+    },
+    "The Knockout (San Francisco)": {
+      "coordinates": [
+        -122.420015,
+        37.745174
+      ],
+      "text": "The Knockout"
+    },
+    "Neck Of The Woods (San Francisco)": {
+      "coordinates": [
+        -122.463689,
+        37.783052
+      ],
+      "text": "Neck of the Woods"
+    },
+    "Grace Cathedral (San Francisco)": {
+      "coordinates": [
+        -122.413174,
+        37.791782999999995
+      ],
+      "text": "Grace Cathedral"
+    },
+    "Madrone Art Bar (San Francisco)": {
+      "coordinates": [
+        -122.43743,
+        37.774025
+      ],
+      "text": "Madrone Art Bar"
+    },
+    "The Center SF (San Francisco)": {
+      "coordinates": [
+        -122.4307162,
+        37.7744549
+      ]
+    },
+    "UC Theater, Berkeley": {
+      "coordinates": [
+        -122.269958,
+        37.871601
+      ],
+      "text": "Uc Theater"
+    },
+    "Midtown Barfly (Sacramento)": {
+      "coordinates": [
+        -121.479138,
+        38.574531
+      ],
+      "text": "Midtown BarFly"
+    },
+    "The Catalyst Club (Santa Cruz)": {
+      "coordinates": [
+        -122.025597,
+        36.971359
+      ],
+      "text": "The Catalyst"
+    },
+    "The Colonial Theatre (Sacramento)": {
+      "coordinates": [
+        -121.4515798,
+        38.5424065
+      ]
+    },
+    "Goldfield Trading Post (Roseville)": {
+      "coordinates": [
+        -121.484119,
+        38.577715
+      ],
+      "text": "Goldfield Trading Post"
+    },
+    "Svn West (San Francisco)": {
+      "coordinates": [
+        -122.419648,
+        37.774356
+      ],
+      "text": "SVN West"
+    },
+    "Goldfield Trading Post, Sacramento": {
+      "coordinates": [
+        -121.484119,
+        38.577715
+      ],
+      "text": "Goldfield Trading Post"
+    },
+    "Chase Center (San Francisco)": {
+      "coordinates": [
+        -122.387426,
+        37.7678485
+      ],
+      "text": "Chase Center"
+    },
+    "Stay Gold Deli, Oakland": {
+      "coordinates": [
+        -122.275856,
+        37.817699
+      ]
+    },
+    "Freight and Salvage, Berkeley": {
+      "coordinates": [
+        -122.2695846,
+        37.8708514
+      ]
+    },
+    "Sweetwater Music Hall, Mill Valley": {
+      "coordinates": [
+        -122.547954,
+        37.907057
+      ]
+    },
+    "Ace Of Spades (Sacramento)": {
+      "coordinates": [
+        -121.4909317,
+        38.5699587
+      ]
+    },
+    "Underground (San Francisco)": {
+      "coordinates": [
+        -122.429336,
+        37.772305
+      ]
+    },
+    "Bergerac (San Francisco)": {
+      "coordinates": [
+        -122.413712,
+        37.771563
+      ]
+    },
+    "Emporium SF (San Francisco)": {
+      "coordinates": [
+        -122.437701,
+        37.775316
+      ]
+    },
+    "Gray Area (San Francisco)": {
+      "coordinates": [
+        -122.41848,
+        37.754367
+      ]
+    },
+    "Cafe Du Nord, S.F.": {
+      "coordinates": [
+        -122.43010000000001,
+        37.766594999999995
+      ]
+    },
+    "Cafe du Nord, S.F.": {
+      "coordinates": [
+        -122.43010000000001,
+        37.766594999999995
+      ]
+    }
+  }
+}
