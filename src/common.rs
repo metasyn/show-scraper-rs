@@ -2,6 +2,7 @@ use serde::Serialize;
 use std::fmt;
 
 #[derive(Serialize, Clone)]
+#[serde(crate = "rocket::serde")]
 pub struct Show {
     pub venue: String,
     pub artists: Vec<String>,

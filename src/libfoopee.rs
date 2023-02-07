@@ -73,11 +73,12 @@ fn parse_date_list(n: Node) -> Option<Vec<Show>> {
     return Some(shows);
 }
 
-fn parse(url: &str) -> Result<Vec<Show>, reqwest::Error> {
-    let resp = reqwest::blocking::get(url);
+async fn parse(url: &str) -> Result<Vec<Show>, reqwest::Error> {
+    let resp = reqwest::get(url).await;
     match resp {
         Ok(resp) => {
-            let document = Document::from_read(resp).unwrap();
+            let body = resp.text().await.expect("unable to get text from foopee");
+            let document = Document::from(body.as_str());
             let root_list = document.find(Name("ul")).take(1).collect::<Vec<_>>()[0];
 
             let mut show_vec: Vec<Show> = Vec::new();
@@ -97,14 +98,14 @@ fn parse(url: &str) -> Result<Vec<Show>, reqwest::Error> {
     }
 }
 
-fn scrape_shows() -> Vec<Show> {
+pub async fn scrape() -> Vec<Show> {
     let mut all_shows: Vec<Show> = Vec::new();
 
     for url in &[
         "http://www.foopee.com/punk/the-list/by-date.0.html",
         "http://www.foopee.com/punk/the-list/by-date.1.html",
     ] {
-        match parse(url) {
+        match parse(url).await {
             Ok(s) => all_shows.extend(s),
             Err(e) => println!("Failed parsing url: {} \n{}", url, e),
         };
@@ -113,15 +114,11 @@ fn scrape_shows() -> Vec<Show> {
     return all_shows;
 }
 
-pub fn scrape_shows_to_json() -> serde_json::Result<std::string::String> {
-    return serde_json::to_string(&scrape_shows());
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
-    fn it_works() {
-        assert!(scrape_shows().len() > 1);
+    fn foopee_scrape_works() {
+        assert!(scrape().len() > 1);
     }
 }

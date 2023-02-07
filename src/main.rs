@@ -1,37 +1,32 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
 #[macro_use]
 extern crate rocket;
 
 use rocket::fairing::{Fairing, Info, Kind};
+use rocket::fs::{relative, FileServer};
 use rocket::http::Header;
 use rocket::{Request, Response};
 
-use rocket::config::{Config, Environment};
-use rocket::response::content;
+use rocket::serde::json::Json;
 
 mod common;
 mod lib19hz;
-mod parser;
+mod libfoopee;
 
-#[get("/")]
-fn index() -> Result<content::Json<std::string::String>, serde_json::Error> {
-    return match parser::scrape_shows_to_json() {
-        Ok(resp) => Ok(content::Json(resp)),
-        Err(resp) => Err(resp),
-    };
+use common::Show;
+
+#[get("/foopee")]
+async fn get_foopee() -> Json<Vec<Show>> {
+    Json(libfoopee::scrape().await)
 }
 
-#[get("/")]
-fn get_19hz() -> Result<content::Json<std::string::String>, serde_json::Error> {
-    return match lib19hz::scrape_shows_to_json() {
-        Ok(resp) => Ok(content::Json(resp)),
-        Err(resp) => Err(resp),
-    };
+#[get("/19hz")]
+async fn get_19hz() -> Json<Vec<Show>> {
+    Json(lib19hz::scrape().await)
 }
 
 pub struct CORS;
 
+#[rocket::async_trait]
 impl Fairing for CORS {
     fn info(&self) -> Info {
         Info {
@@ -40,7 +35,7 @@ impl Fairing for CORS {
         }
     }
 
-    fn on_response(&self, _: &Request, response: &mut Response) {
+    async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
         response.set_header(Header::new("Access-Control-Allow-Origin", "*"));
         response.set_header(Header::new(
             "Access-Control-Allow-Methods",
@@ -51,25 +46,10 @@ impl Fairing for CORS {
     }
 }
 
-fn main() -> Result<(), rocket::config::ConfigError> {
-    let config_result = Config::build(Environment::Production)
-        .address("0.0.0.0")
-        .port(
-            std::env::var("ROCKET_PORT")
-                .map(|x| x.parse::<u16>().unwrap())
-                .unwrap_or(80),
-        )
-        .finalize();
-
-    match config_result {
-        Ok(config) => {
-            rocket::custom(config)
-                .attach(CORS)
-                .mount("/", routes![index])
-                .mount("/19hz", routes![get_19hz])
-                .launch();
-            return Ok(());
-        }
-        Err(config) => Err(config),
-    }
+#[launch]
+fn rocket() -> _ {
+    rocket::build()
+        .attach(CORS)
+        .mount("/scrape", routes![get_foopee, get_19hz])
+        .mount("/", FileServer::from(relative!("public")))
 }

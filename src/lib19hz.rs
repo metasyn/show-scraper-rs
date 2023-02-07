@@ -4,12 +4,16 @@ use select::predicate::Name;
 
 use crate::common::Show;
 
-fn parse_19hz_info(url: &str) -> Result<Vec<Show>, reqwest::Error> {
-    let resp = reqwest::blocking::get(url);
+async fn parse_19hz_info(url: &str) -> Result<Vec<Show>, reqwest::Error> {
+    let resp = reqwest::get(url).await;
+
     match resp {
         Ok(resp) => {
             let table = table_extract::Table::find_first(
-                resp.text().expect("unable to get response text").as_str(),
+                resp.text()
+                    .await
+                    .expect("unable to get response text")
+                    .as_str(),
             )
             .expect("unable to find table");
 
@@ -103,11 +107,11 @@ fn parse_19hz_info(url: &str) -> Result<Vec<Show>, reqwest::Error> {
     }
 }
 
-fn scrape_shows() -> Vec<Show> {
+pub async fn scrape() -> Vec<Show> {
     let mut all_shows: Vec<Show> = Vec::new();
 
     for url in &["https://19hz.info/eventlisting_BayArea.php"] {
-        match parse_19hz_info(url) {
+        match parse_19hz_info(url).await {
             Ok(s) => all_shows.extend(s),
             Err(e) => println!("Failed parsing url: {} \n{}", url, e),
         };
@@ -116,15 +120,11 @@ fn scrape_shows() -> Vec<Show> {
     return all_shows;
 }
 
-pub fn scrape_shows_to_json() -> serde_json::Result<std::string::String> {
-    return serde_json::to_string(&scrape_shows());
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
-    fn test_parsing_19hz_date_fmt() {
+    fn test_19hz_scrape_works() {
         let res = NaiveDate::parse_from_str("2023 Sun: Feb 5", "%Y %a: %b%e");
         assert!(res.is_ok());
     }
