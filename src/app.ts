@@ -28,6 +28,7 @@ class MapHandler {
   featureCollection: FeatureCollection;
   dates: DateItem[];
   popup: maplibregl.Popup;
+  setup = false;
 
   constructor() {
     this.map = this.createMap();
@@ -41,6 +42,22 @@ class MapHandler {
       this.featureCollection = featureCollection;
       this.dates = dates;
       this.setupMap();
+
+      // https://github.com/mapbox/mapbox-gl-js/issues/6707
+      const loop = () => {
+        if (this.setup) {
+          return;
+        } else if (this.map.loaded()) {
+          this.setupMap();
+        } else {
+          // Poll
+          requestAnimationFrame(() => {
+            this.setupMap();
+          });
+        }
+      };
+      loop();
+
       this.setupDates();
       this.updateListingsAndMap();
       this.addListeners();
@@ -97,154 +114,144 @@ class MapHandler {
   }
 
   setupMap(): void {
-    this.map.on("load", () => {
-      // Add the actual shows
-      this.map.addSource(showsSource, {
-        type: "geojson",
-        data: this.featureCollection,
-        cluster: true,
-        clusterMaxZoom: 14,
-        clusterRadius: 50,
+    // Add the actual shows
+    this.map.addSource(showsSource, {
+      type: "geojson",
+      data: this.featureCollection,
+      cluster: true,
+      clusterMaxZoom: 14,
+      clusterRadius: 50,
+    });
+
+    // Main layer
+    this.map.addLayer({
+      id: showLayer,
+      type: "circle",
+      source: showsSource,
+      filter: ["!", ["has", "point_count"]],
+      paint: {
+        "circle-color": "#4CAF50",
+        "circle-radius": 10,
+        "circle-stroke-width": 1,
+        "circle-stroke-color": "#fff",
+      },
+    });
+
+    this.map.addLayer({
+      id: clustersLayer,
+      type: "circle",
+      source: showsSource,
+      filter: ["has", "point_count"],
+      paint: {
+        // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+        // with three steps to implement three types of circles:
+        "circle-color": [
+          "step",
+          ["get", "point_count"],
+          "#51bbd6",
+          50,
+          "#f1f075",
+          100,
+          "#f28cb1",
+        ],
+        "circle-radius": ["step", ["get", "point_count"], 20, 50, 30, 100, 40],
+      },
+    });
+
+    this.map.addLayer({
+      id: clusterCountLayer,
+      type: "symbol",
+      source: showsSource,
+      filter: ["has", "point_count"],
+      layout: {
+        "text-field": "{point_count_abbreviated}",
+        // Needs to be a font that is available
+        // from https://github.com/openmaptiles/fonts
+        "text-font": ["Open Sans Bold"],
+        "text-size": 12,
+      },
+    });
+
+    // inspect a cluster on click
+    this.map.on("click", clustersLayer, (e) => {
+      const features = this.map.queryRenderedFeatures(e.point, {
+        layers: [clustersLayer],
       });
+      const clusterId = features[0].properties.cluster_id;
+      const source: maplibregl.GeoJSONSource = this.map.getSource(
+        showsSource
+      ) as maplibregl.GeoJSONSource;
 
-      // Main layer
-      this.map.addLayer({
-        id: showLayer,
-        type: "circle",
-        source: showsSource,
-        filter: ["!", ["has", "point_count"]],
-        paint: {
-          "circle-color": "#4CAF50",
-          "circle-radius": 10,
-          "circle-stroke-width": 1,
-          "circle-stroke-color": "#fff",
-        },
-      });
-
-      this.map.addLayer({
-        id: clustersLayer,
-        type: "circle",
-        source: showsSource,
-        filter: ["has", "point_count"],
-        paint: {
-          // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-          // with three steps to implement three types of circles:
-          "circle-color": [
-            "step",
-            ["get", "point_count"],
-            "#51bbd6",
-            50,
-            "#f1f075",
-            100,
-            "#f28cb1",
-          ],
-          "circle-radius": [
-            "step",
-            ["get", "point_count"],
-            20,
-            50,
-            30,
-            100,
-            40,
-          ],
-        },
-      });
-
-      this.map.addLayer({
-        id: clusterCountLayer,
-        type: "symbol",
-        source: showsSource,
-        filter: ["has", "point_count"],
-        layout: {
-          "text-field": "{point_count_abbreviated}",
-          // Needs to be a font that is available
-          // from https://github.com/openmaptiles/fonts
-          "text-font": ["Open Sans Bold"],
-          "text-size": 12,
-        },
-      });
-
-      // inspect a cluster on click
-      this.map.on("click", clustersLayer, (e) => {
-        const features = this.map.queryRenderedFeatures(e.point, {
-          layers: [clustersLayer],
-        });
-        const clusterId = features[0].properties.cluster_id;
-        const source: maplibregl.GeoJSONSource = this.map.getSource(
-          showsSource
-        ) as maplibregl.GeoJSONSource;
-
-        source.getClusterExpansionZoom(clusterId, (err, zoom) => {
-          if (err || !zoom) return;
-          const item = features[0].geometry;
-          if (item.type == "Point") {
-            this.map.easeTo({
-              center: [item.coordinates[0], item.coordinates[1]],
-              zoom: zoom + 1, // extra zooming
-            });
-          }
-        });
-      });
-
-      // When a click event occurs on a feature in
-      // the unclustered-point layer, open a popup at
-      // the location of the feature, with
-      // description HTML from its properties.
-      this.map.on("click", showLayer, (e) => {
-        if (e && e.features && e.features[0].geometry.type == "Point") {
-          const item = e.features[0];
-          const geometry = item.geometry as Point;
-          const coordinates = geometry.coordinates.slice();
-
-          // TODO is this needed?
-          // Ensure that if the map is zoomed out such that
-          // multiple copies of the feature are visible, the
-          // popup appears over the copy being pointed to.
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
-
-          const container = document.createElement("div");
-          container.classList.add("popup-listing");
-
-          // Get all shows related to this point, even if
-          // we've clikced on particular date
-          const venue = e.features[0].properties?.venue;
-          this.map
-            .queryRenderedFeatures()
-            .filter((x) => x.properties?.venue === venue)
-            .sort((a, b) => a.properties?.date > b.properties?.date)
-            .forEach((x) => {
-              container.appendChild(
-                this.makeShowDetailsHtml(x.properties, true)
-              );
-            });
-
-          // Attach single venue
-          const p = document.createElement("p");
-          p.innerText = venue;
-          p.setAttribute("class", "venue");
-          const html = p.outerHTML + container.outerHTML;
-
-          this.popup
-            .setLngLat([coordinates[0], coordinates[1]])
-            .setHTML(html)
-            .addTo(this.map);
+      source.getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err || !zoom) return;
+        const item = features[0].geometry;
+        if (item.type == "Point") {
+          this.map.easeTo({
+            center: [item.coordinates[0], item.coordinates[1]],
+            zoom: zoom + 1, // extra zooming
+          });
         }
       });
-
-      this.map.on("mouseenter", clustersLayer, () => {
-        this.map.getCanvas().style.cursor = "pointer";
-      });
-
-      this.map.on("mouseleave", clustersLayer, () => {
-        this.map.getCanvas().style.cursor = "";
-      });
-
-      this.map.on("move", () => {
-        this.updateListingsAndMap();
-      });
     });
+
+    // When a click event occurs on a feature in
+    // the unclustered-point layer, open a popup at
+    // the location of the feature, with
+    // description HTML from its properties.
+    this.map.on("click", showLayer, (e) => {
+      if (e && e.features && e.features[0].geometry.type == "Point") {
+        const item = e.features[0];
+        const geometry = item.geometry as Point;
+        const coordinates = geometry.coordinates.slice();
+
+        // TODO is this needed?
+        // Ensure that if the map is zoomed out such that
+        // multiple copies of the feature are visible, the
+        // popup appears over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        const container = document.createElement("div");
+        container.classList.add("popup-listing");
+
+        // Get all shows related to this point, even if
+        // we've clikced on particular date
+        const venue = e.features[0].properties?.venue;
+        this.map
+          .queryRenderedFeatures()
+          .filter((x) => x.properties?.venue === venue)
+          .sort((a, b) => a.properties?.date > b.properties?.date)
+          .forEach((x) => {
+            container.appendChild(this.makeShowDetailsHtml(x.properties, true));
+          });
+
+        // Attach single venue
+        const p = document.createElement("p");
+        p.innerText = venue;
+        p.setAttribute("class", "venue");
+        const html = p.outerHTML + container.outerHTML;
+
+        this.popup
+          .setLngLat([coordinates[0], coordinates[1]])
+          .setHTML(html)
+          .addTo(this.map);
+      }
+    });
+
+    this.map.on("mouseenter", clustersLayer, () => {
+      this.map.getCanvas().style.cursor = "pointer";
+    });
+
+    this.map.on("mouseleave", clustersLayer, () => {
+      this.map.getCanvas().style.cursor = "";
+    });
+
+    this.map.on("move", () => {
+      this.updateListingsAndMap();
+    });
+
+    this.setup = true;
   }
 
   makeShowDetailsHtml(

@@ -6,10 +6,10 @@ import { Show, ShowsByDate, DateItem, ParsedData } from "./interfaces";
 const isDev = () => window.location.host.includes("localhost");
 
 export default class Parser {
-  static async getShowJson(): Promise<Show[]> {
+  static async getFoopeeJson(): Promise<Show[]> {
     const list = isDev()
-      ? "http://localhost:8000/scrape/foopee"
-      : "https://metasyn.pw/show-scraper";
+      ? "http://localhost:8000/shows/scrape/foopee"
+      : "https://metasyn.pw/shows/scrape/foopee";
     try {
       return await fetch(list).then((r) => r.json());
     } catch (err) {
@@ -19,8 +19,8 @@ export default class Parser {
 
   static async get19hzJson(): Promise<Show[]> {
     const list = isDev()
-      ? "http://localhost:8000/scrape/19hz"
-      : "https://metasyn.pw/show-scraper/19hz";
+      ? "http://localhost:8000/shows/scrape/19hz"
+      : "https://metasyn.pw/shows/scrape/19hz";
     try {
       return await fetch(list).then((r) => r.json());
     } catch (err) {
@@ -29,18 +29,17 @@ export default class Parser {
   }
 
   static async parseData(): Promise<ParsedData> {
-    const [dataTheList, data19hz] = await Promise.all([
-      Parser.getShowJson(),
+    return await Promise.all([
+      Parser.getFoopeeJson(),
       Parser.get19hzJson(),
-    ]);
-
-    const data = dataTheList.concat(data19hz);
-
-    const showsByDate: ShowsByDate = Parser.sortByDate(data);
-    return {
-      featureCollection: Parser.geojsonify(showsByDate),
-      dates: Parser.getDates(showsByDate),
-    };
+    ]).then((values) => {
+      const data = values.flat(1);
+      const showsByDate: ShowsByDate = Parser.sortByDate(data);
+      return {
+        featureCollection: Parser.geojsonify(showsByDate),
+        dates: Parser.getDates(showsByDate),
+      };
+    });
   }
 
   static getDates(organized: ShowsByDate): DateItem[] {

@@ -50,6 +50,6 @@ impl Fairing for CORS {
 fn rocket() -> _ {
     rocket::build()
         .attach(CORS)
-        .mount("/scrape", routes![get_foopee, get_19hz])
-        .mount("/", FileServer::from(relative!("public")))
+        .mount("/shows/scrape", routes![get_foopee, get_19hz])
+        .mount("/shows", FileServer::from(relative!("public")))
 }
